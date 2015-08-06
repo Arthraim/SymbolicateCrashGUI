@@ -69,39 +69,69 @@ class ViewController: NSViewController, NSSplitViewDelegate {
     func doSymbolicate(#appFilename: String, dysmFilename: String, crashFilename: String) {
         // export DEVELOPER_DIR=`xcode-select -p`;alias symbolicate='/Applications/Xcode.app//Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash';symbolicate -v '1438759250.308397.crash' > '1438759250.308397.symbolicated.crash'
 
+
+        // TODO: create a temporary directory for .app .dsym .crash files
+        // TODO: write output file to there as well
+
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
 
-            // TODO: get user's symbolicatecrash path
-            // TODO: create a temporary directory for .app .dsym .crash files
-            // TODO: write output file to there as well
-            let command = "export DEVELOPER_DIR=`xcode-select -p`;'/Applications/Xcode.app/Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash' -v '\(crashFilename)' > '1438759250.308397.symbolicated.crash'"
+            // get user's xcode path
+            var xcodePath: String = "/Applications/Xcode.app/"
+            let xcodeSelectCommand = "xcode-select -p"
+            if let output = self.runShellCommand(xcodeSelectCommand) {
+                let components = output.componentsSeparatedByString("Xcode.app")
+                if components.count > 0 {
+                    xcodePath = "\(components[0] as! String)Xcode.app/"
+                }
+            } else {
+                // TODO: handle error
+                return
+            }
 
-            let pipe = NSPipe()
+            // get user's symbolicatecrash path
+            var symolicateCrashPath: String = "\(xcodePath)Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash"
+            let symolicateCrashCommand = "find '\(xcodePath)' -name symbolicatecrash -type f"
+            if let output = self.runShellCommand(symolicateCrashCommand) {
+                symolicateCrashPath = (output as String).stringByReplacingOccurrencesOfString("\n", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            } else {
+                // TODO: handle error
+                return
+            }
 
-            let task = NSTask()
-            task.launchPath = "/bin/sh"
-            task.arguments = ["-c", command]
-            task.standardOutput = pipe
-
-            let file: NSFileHandle = pipe.fileHandleForReading
-
-            task.launch()
-
-            let data: NSData = file.readDataToEndOfFile()
+            let command = "export DEVELOPER_DIR=`xcode-select -p`;'\(symolicateCrashPath)' -v '\(crashFilename)' > '\(crashFilename).symbolicated.crash'"
+            let logOutput = self.runShellCommand(command)
 
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                if let output = NSString(data:data, encoding:NSUTF8StringEncoding) {
-                    NSLog("%@", output)
+                if let logOutput = logOutput {
+                    NSLog("%@", logOutput)
                 } else {
                     NSLog("no output")
                 }
             })
-
         }) // end of async closure
     }
 
     func splitView(splitView: NSSplitView, shouldHideDividerAtIndex dividerIndex: Int) -> Bool {
         return true
+    }
+
+    func runShellCommand(command: String) -> NSString? {
+        var output: String?
+
+        let pipe = NSPipe()
+
+        let task = NSTask()
+        task.launchPath = "/bin/sh"
+        task.arguments = ["-c", command]
+        task.standardOutput = pipe
+
+        let file: NSFileHandle = pipe.fileHandleForReading
+
+        task.launch()
+
+        let data: NSData = file.readDataToEndOfFile()
+
+        return NSString(data:data, encoding:NSUTF8StringEncoding)
     }
 
 }
