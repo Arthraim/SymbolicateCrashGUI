@@ -10,7 +10,6 @@ When the work is done, app will open the symbolicated crash file for you.
 Also, the symblicated crash file will be in a new 'symbolicateWorkspace' folder on your desktop.
 
 ## TODOs
-* Show some HUD when crash log is being symbolicated.
-* Excpetions/errors handling.
+see issue #1 
 
 It's my first Mac app, really bad experience huh, so... __PR is welcome!__
