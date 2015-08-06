@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		81E2B7159DAD9422EC5D4034 /* Pods_SymbolicateCrashGUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15DE574419127C499708CCF1 /* Pods_SymbolicateCrashGUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8ED7F2171B734ACF007A9D75 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED7F2161B734ACF007A9D75 /* AppDelegate.swift */; };
 		8ED7F2191B734ACF007A9D75 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED7F2181B734ACF007A9D75 /* ViewController.swift */; };
 		8ED7F21B1B734ACF007A9D75 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7F21A1B734ACF007A9D75 /* Images.xcassets */; };
@@ -26,6 +27,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15DE574419127C499708CCF1 /* Pods_SymbolicateCrashGUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SymbolicateCrashGUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		210B3124775D929C85240244 /* Pods-SymbolicateCrashGUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SymbolicateCrashGUI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SymbolicateCrashGUI/Pods-SymbolicateCrashGUI.debug.xcconfig"; sourceTree = "<group>"; };
 		8ED7F2111B734ACF007A9D75 /* SymbolicateCrashGUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SymbolicateCrashGUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ED7F2151B734ACF007A9D75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8ED7F2161B734ACF007A9D75 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +39,7 @@
 		8ED7F2281B734ACF007A9D75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8ED7F2291B734ACF007A9D75 /* SymbolicateCrashGUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolicateCrashGUITests.swift; sourceTree = "<group>"; };
 		8ED7F2331B7351B2007A9D75 /* DraggableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
+		8FC232A85EF1BA00673779A4 /* Pods-SymbolicateCrashGUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SymbolicateCrashGUI.release.xcconfig"; path = "Pods/Target Support Files/Pods-SymbolicateCrashGUI/Pods-SymbolicateCrashGUI.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81E2B7159DAD9422EC5D4034 /* Pods_SymbolicateCrashGUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +67,8 @@
 				8ED7F2131B734ACF007A9D75 /* SymbolicateCrashGUI */,
 				8ED7F2261B734ACF007A9D75 /* SymbolicateCrashGUITests */,
 				8ED7F2121B734ACF007A9D75 /* Products */,
+				B8DD0DE6F9867F764133E2DA /* Pods */,
+				C6734B710F42CC0D1D4EB502 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,6 +119,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B8DD0DE6F9867F764133E2DA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				210B3124775D929C85240244 /* Pods-SymbolicateCrashGUI.debug.xcconfig */,
+				8FC232A85EF1BA00673779A4 /* Pods-SymbolicateCrashGUI.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		C6734B710F42CC0D1D4EB502 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				15DE574419127C499708CCF1 /* Pods_SymbolicateCrashGUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -119,9 +143,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8ED7F22D1B734ACF007A9D75 /* Build configuration list for PBXNativeTarget "SymbolicateCrashGUI" */;
 			buildPhases = (
+				3F4AFF8A744399E34319D569 /* Check Pods Manifest.lock */,
 				8ED7F20D1B734ACF007A9D75 /* Sources */,
 				8ED7F20E1B734ACF007A9D75 /* Frameworks */,
 				8ED7F20F1B734ACF007A9D75 /* Resources */,
+				C1DC6475B733D5E0CF18EF84 /* Copy Pods Resources */,
+				E2C5F61D667A4ADA80162C01 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -205,6 +232,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3F4AFF8A744399E34319D569 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C1DC6475B733D5E0CF18EF84 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SymbolicateCrashGUI/Pods-SymbolicateCrashGUI-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E2C5F61D667A4ADA80162C01 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SymbolicateCrashGUI/Pods-SymbolicateCrashGUI-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8ED7F20D1B734ACF007A9D75 /* Sources */ = {
@@ -329,6 +404,7 @@
 		};
 		8ED7F22E1B734ACF007A9D75 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 210B3124775D929C85240244 /* Pods-SymbolicateCrashGUI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -340,6 +416,7 @@
 		};
 		8ED7F22F1B734ACF007A9D75 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FC232A85EF1BA00673779A4 /* Pods-SymbolicateCrashGUI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -404,6 +481,7 @@
 				8ED7F22F1B734ACF007A9D75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8ED7F2301B734ACF007A9D75 /* Build configuration list for PBXNativeTarget "SymbolicateCrashGUITests" */ = {
 			isa = XCConfigurationList;
@@ -412,6 +490,7 @@
 				8ED7F2321B734ACF007A9D75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

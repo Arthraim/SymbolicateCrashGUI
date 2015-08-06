@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import DJProgressHUD_OSX
 
 class ViewController: NSViewController, NSSplitViewDelegate {
 
@@ -40,6 +41,7 @@ class ViewController: NSViewController, NSSplitViewDelegate {
         if let appFilename = appFilename,
             dysmFilename = dysmFilename,
             crashFilename = crashFilename {
+                DJProgressHUD.showStatus("Initializing...", fromView: self.draggableView)
                 doSymbolicate(appFilename: appFilename, dysmFilename: dysmFilename, crashFilename: crashFilename)
         }
     }
@@ -70,6 +72,7 @@ class ViewController: NSViewController, NSSplitViewDelegate {
         // export DEVELOPER_DIR=`xcode-select -p`;alias symbolicate='/Applications/Xcode.app//Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash';symbolicate -v '1438759250.308397.crash' > '1438759250.308397.symbolicated.crash'
 
         // create a temporary directory for .app .dsym .crash files
+        DJProgressHUD.showStatus("Creating directory...", fromView: self.draggableView)
         var paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DesktopDirectory, NSSearchPathDomainMask.UserDomainMask, true);
         var workingDirectory = "\(paths[0])/symbolicateWorkspace\(arc4random_uniform(1000))/"
         if !NSFileManager.defaultManager().createDirectoryAtPath(workingDirectory, withIntermediateDirectories:true, attributes:nil, error:nil) {
@@ -78,6 +81,7 @@ class ViewController: NSViewController, NSSplitViewDelegate {
         }
 
         // copy files to this directory
+        DJProgressHUD.showStatus("Copying files...", fromView: self.draggableView)
         NSFileManager.defaultManager().copyItemAtPath(appFilename, toPath: "\(workingDirectory)tmp.app", error: nil)
         NSFileManager.defaultManager().copyItemAtPath(dysmFilename, toPath: "\(workingDirectory)tmp.dYSM", error: nil)
         NSFileManager.defaultManager().copyItemAtPath(crashFilename, toPath: "\(workingDirectory)tmp.crash", error: nil)
@@ -85,6 +89,9 @@ class ViewController: NSViewController, NSSplitViewDelegate {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
 
             // get user's xcode path
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DJProgressHUD.showStatus("Locating Xcode...", fromView: self.draggableView)
+            })
             var xcodePath: String = "/Applications/Xcode.app/"
             let xcodeSelectCommand = "xcode-select -p"
             if let output = self.runShellCommand(xcodeSelectCommand) {
@@ -98,6 +105,9 @@ class ViewController: NSViewController, NSSplitViewDelegate {
             }
 
             // get user's symbolicatecrash path
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DJProgressHUD.showStatus("Locating SymbolicateCrash...", fromView: self.draggableView)
+            })
             var symolicateCrashPath: String = "\(xcodePath)Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash"
             let symolicateCrashCommand = "find '\(xcodePath)' -name symbolicatecrash -type f"
             if let output = self.runShellCommand(symolicateCrashCommand) {
@@ -107,16 +117,21 @@ class ViewController: NSViewController, NSSplitViewDelegate {
                 return
             }
 
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DJProgressHUD.showStatus("Runing SymbolicateCrash...", fromView: self.draggableView)
+            })
             let command = "export DEVELOPER_DIR=`xcode-select -p`;'\(symolicateCrashPath)' -v '\(workingDirectory)tmp.crash' > '\(workingDirectory)tmp.symbolicated.crash'"
             let logOutput = self.runShellCommand(command)
 
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let logOutput = logOutput {
                     NSWorkspace.sharedWorkspace().openFile("\(workingDirectory)tmp.symbolicated.crash")
+                    DJProgressHUD.showStatus("Done!", fromView: self.draggableView)
                     NSLog("%@", logOutput)
                 } else {
-                    NSLog("no output")
+                    DJProgressHUD.showStatus("SymbolicateCrash fail", fromView: self.draggableView)
                 }
+                DJProgressHUD.dismiss()
             })
         }) // end of async closure
     }
