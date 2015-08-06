@@ -35,6 +35,8 @@ class DraggableView: NSView {
     }
 
     override func performDragOperation(sender: NSDraggingInfo) -> Bool {
+        layer!.backgroundColor = NSColor.whiteColor().CGColor
+
         var pboard: NSPasteboard = sender.draggingPasteboard()
         if let filenames = pboard.propertyListForType(NSFilenamesPboardType) as? [String],
             callback = callback {
