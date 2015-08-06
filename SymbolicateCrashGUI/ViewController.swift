@@ -69,9 +69,18 @@ class ViewController: NSViewController, NSSplitViewDelegate {
     func doSymbolicate(#appFilename: String, dysmFilename: String, crashFilename: String) {
         // export DEVELOPER_DIR=`xcode-select -p`;alias symbolicate='/Applications/Xcode.app//Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash';symbolicate -v '1438759250.308397.crash' > '1438759250.308397.symbolicated.crash'
 
+        // create a temporary directory for .app .dsym .crash files
+        var paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DesktopDirectory, NSSearchPathDomainMask.UserDomainMask, true);
+        var workingDirectory = "\(paths[0])/symbolicateWorkspace\(arc4random_uniform(1000))/"
+        if !NSFileManager.defaultManager().createDirectoryAtPath(workingDirectory, withIntermediateDirectories:true, attributes:nil, error:nil) {
+            // TODO: handle error
+            return
+        }
 
-        // TODO: create a temporary directory for .app .dsym .crash files
-        // TODO: write output file to there as well
+        // copy files to this directory
+        NSFileManager.defaultManager().copyItemAtPath(appFilename, toPath: "\(workingDirectory)tmp.app", error: nil)
+        NSFileManager.defaultManager().copyItemAtPath(dysmFilename, toPath: "\(workingDirectory)tmp.dYSM", error: nil)
+        NSFileManager.defaultManager().copyItemAtPath(crashFilename, toPath: "\(workingDirectory)tmp.crash", error: nil)
 
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
 
@@ -98,11 +107,12 @@ class ViewController: NSViewController, NSSplitViewDelegate {
                 return
             }
 
-            let command = "export DEVELOPER_DIR=`xcode-select -p`;'\(symolicateCrashPath)' -v '\(crashFilename)' > '\(crashFilename).symbolicated.crash'"
+            let command = "export DEVELOPER_DIR=`xcode-select -p`;'\(symolicateCrashPath)' -v '\(workingDirectory)tmp.crash' > '\(workingDirectory)tmp.symbolicated.crash'"
             let logOutput = self.runShellCommand(command)
 
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let logOutput = logOutput {
+                    NSWorkspace.sharedWorkspace().openFile("\(workingDirectory)tmp.symbolicated.crash")
                     NSLog("%@", logOutput)
                 } else {
                     NSLog("no output")
