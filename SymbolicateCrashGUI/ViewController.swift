@@ -8,16 +8,25 @@
 
 import Cocoa
 
-class ViewController: NSViewController {
+class ViewController: NSViewController, NSSplitViewDelegate {
+
+    @IBOutlet weak var splitView: NSSplitView!
+    @IBOutlet weak var draggableView: DraggableView!
+    @IBOutlet weak var appFileText: NSTextField!
+    @IBOutlet weak var dysmFileText: NSTextField!
+    @IBOutlet weak var crashFileText: NSTextField!
+
+    var appFilename: String?
+    var dysmFilename: String?
+    var crashFilename: String?
+
+    override func awakeFromNib() {
+        splitView.delegate = self
+        draggableView.callback = handleFilenames
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.wantsLayer = true
-        if let layer = view.layer {
-            layer.backgroundColor = NSColor.whiteColor().CGColor
-        }
-        (view as! DraggableView).callback = doSymbolicate;
     }
 
     override var representedObject: AnyObject? {
@@ -26,11 +35,45 @@ class ViewController: NSViewController {
         }
     }
 
-    func doSymbolicate(appFilename: String, dysmFilename: String, crashFilename: String) {
+    func updateUI() {
+        // when everything is ready, do symbolicate
+        if let appFilename = appFilename,
+            dysmFilename = dysmFilename,
+            crashFilename = crashFilename {
+                doSymbolicate(appFilename: appFilename, dysmFilename: dysmFilename, crashFilename: crashFilename)
+        }
+    }
+
+    func handleFilenames(filenames: [String]) -> (Bool) {
+        var successOnce: Bool = false
+        for filename in filenames {
+            NSLog("daggred %@", filename)
+            if filename.hasSuffix(".app") {
+                successOnce = true
+                appFilename = filename
+                appFileText.stringValue = filename
+            } else if filename.hasSuffix(".dSYM") {
+                successOnce = true
+                dysmFilename = filename
+                dysmFileText.stringValue = filename
+            } else if filename.hasSuffix(".crash") {
+                successOnce = true
+                crashFilename = filename
+                crashFileText.stringValue = filename
+            }
+        }
+        updateUI()
+        return successOnce
+    }
+
+    func doSymbolicate(#appFilename: String, dysmFilename: String, crashFilename: String) {
         // export DEVELOPER_DIR=`xcode-select -p`;alias symbolicate='/Applications/Xcode.app//Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash';symbolicate -v '1438759250.308397.crash' > '1438759250.308397.symbolicated.crash'
 
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
 
+            // TODO: get user's symbolicatecrash path
+            // TODO: create a temporary directory for .app .dsym .crash files
+            // TODO: write output file to there as well
             let command = "export DEVELOPER_DIR=`xcode-select -p`;'/Applications/Xcode.app/Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash' -v '\(crashFilename)' > '1438759250.308397.symbolicated.crash'"
 
             let pipe = NSPipe()
@@ -55,6 +98,10 @@ class ViewController: NSViewController {
             })
 
         }) // end of async closure
+    }
+
+    func splitView(splitView: NSSplitView, shouldHideDividerAtIndex dividerIndex: Int) -> Bool {
+        return true
     }
 
 }

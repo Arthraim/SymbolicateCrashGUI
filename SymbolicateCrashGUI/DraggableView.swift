@@ -10,22 +10,19 @@ import Cocoa
 
 class DraggableView: NSView {
 
-    var callback: ((appFilename: String, dysmFilename: String, crashFilename: String) -> ())?
-    var appFilename: String?
-    var dysmFilename: String?
-    var crashFilename: String?
-
-    override func drawRect(dirtyRect: NSRect) {
-        super.drawRect(dirtyRect)
-
-        // Drawing code here.
-    }
+    var callback: ((filenames: [String]) -> (Bool))?
 
     override func awakeFromNib() {
+        wantsLayer = true
+        if let layer = layer {
+            layer.backgroundColor = NSColor.whiteColor().CGColor
+        }
+
         registerForDraggedTypes([NSFilenamesPboardType])
     }
 
     override func draggingEntered(sender: NSDraggingInfo) -> NSDragOperation {
+        layer!.backgroundColor = NSColor(calibratedRed: 0.835, green: 0.875, blue: 0.753, alpha: 1).CGColor
         return .Copy
     }
 
@@ -33,29 +30,16 @@ class DraggableView: NSView {
         return .Copy
     }
 
+    override func draggingExited(sender: NSDraggingInfo?) {
+        layer!.backgroundColor = NSColor.whiteColor().CGColor
+    }
+
     override func performDragOperation(sender: NSDraggingInfo) -> Bool {
         var pboard: NSPasteboard = sender.draggingPasteboard()
-        if let filenames = pboard.propertyListForType(NSFilenamesPboardType) as? [String] {
-            for filename in filenames {
-                NSLog("daggred %@", filename)
-                if filename.hasSuffix(".app") {
-                    appFilename = filename
-                } else if filename.hasSuffix(".dSYM") {
-                    dysmFilename = filename
-                } else if filename.hasSuffix(".crash") {
-                    crashFilename = filename
-                } else {
-                    return false
-                }
-            }
-            // when everything is ready, invoke callback
-            if let appFilename = appFilename,
-                   dysmFilename = dysmFilename,
-                   crashFilename = crashFilename,
-                   callback = callback {
-                callback(appFilename: appFilename, dysmFilename: dysmFilename, crashFilename: crashFilename)
-            }
+        if let filenames = pboard.propertyListForType(NSFilenamesPboardType) as? [String],
+            callback = callback {
+                return callback(filenames: filenames)
         }
-        return true
+        return false
     }
 }

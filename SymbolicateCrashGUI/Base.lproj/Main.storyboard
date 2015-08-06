@@ -668,24 +668,93 @@
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="SymbolicateCrashGUI" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="m2S-Jp-Qdl" customClass="DraggableView" customModule="SymbolicateCrashGUI" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                    <splitView key="view" dividerStyle="paneSplitter" vertical="YES" id="8el-DQ-BQY">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e4k-rb-8q3">
-                                <rect key="frame" x="145" y="127" width="191" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Drag .app .dYSM .crash here" id="zLJ-mc-dPr">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
+                            <customView id="GLT-SX-h4O">
+                                <rect key="frame" x="0.0" y="0.0" width="221" height="300"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <subviews>
+                                    <view translatesAutoresizingMaskIntoConstraints="NO" id="vqt-im-cA5" customClass="DraggableView" customModule="SymbolicateCrashGUI" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="221" height="300"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1fQ-ZG-x2u">
+                                                <rect key="frame" x="19" y="142" width="183" height="17"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Drag .app .dYSM .crash here" id="Tg3-bD-Pld">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="centerX" secondItem="1fQ-ZG-x2u" secondAttribute="centerX" id="2u7-Fd-Rrj"/>
+                                            <constraint firstAttribute="centerY" secondItem="1fQ-ZG-x2u" secondAttribute="centerY" id="IL1-cu-CJF"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="vqt-im-cA5" secondAttribute="trailing" id="2uE-Vf-wwe"/>
+                                    <constraint firstItem="vqt-im-cA5" firstAttribute="leading" secondItem="GLT-SX-h4O" secondAttribute="leading" id="Kg9-Cu-Rzd"/>
+                                    <constraint firstAttribute="bottom" secondItem="vqt-im-cA5" secondAttribute="bottom" id="fNM-vQ-4gQ"/>
+                                    <constraint firstItem="vqt-im-cA5" firstAttribute="top" secondItem="GLT-SX-h4O" secondAttribute="top" id="x44-Iz-R4s"/>
+                                </constraints>
+                            </customView>
+                            <customView id="fDX-tD-S3m">
+                                <rect key="frame" x="231" y="0.0" width="219" height="300"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <subviews>
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="13N-eF-c6C">
+                                        <rect key="frame" x="18" y="179" width="183" height="17"/>
+                                        <textFieldCell key="cell" controlSize="mini" enabled="NO" sendsActionOnEndEditing="YES" alignment="center" title="No .app provided" id="WXZ-eR-SfC">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l5g-Ja-1y4">
+                                        <rect key="frame" x="18" y="142" width="183" height="17"/>
+                                        <textFieldCell key="cell" controlSize="mini" enabled="NO" sendsActionOnEndEditing="YES" alignment="center" title="No .dYSM provided" id="qcQ-PF-dZk">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3hg-JD-rcF">
+                                        <rect key="frame" x="18" y="105" width="183" height="17"/>
+                                        <textFieldCell key="cell" controlSize="mini" enabled="NO" sendsActionOnEndEditing="YES" alignment="center" title="No .crash provided" id="UBd-fi-Sql">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="centerY" secondItem="l5g-Ja-1y4" secondAttribute="centerY" id="3Oe-rs-o9T"/>
+                                    <constraint firstItem="3hg-JD-rcF" firstAttribute="width" secondItem="fDX-tD-S3m" secondAttribute="width" constant="-40" id="5eN-Kb-dSr"/>
+                                    <constraint firstItem="3hg-JD-rcF" firstAttribute="centerX" secondItem="l5g-Ja-1y4" secondAttribute="centerX" id="CAJ-5B-JxG"/>
+                                    <constraint firstItem="l5g-Ja-1y4" firstAttribute="width" secondItem="fDX-tD-S3m" secondAttribute="width" constant="-40" id="HTO-dm-sSL"/>
+                                    <constraint firstAttribute="centerX" secondItem="l5g-Ja-1y4" secondAttribute="centerX" id="XB9-vY-tSQ"/>
+                                    <constraint firstItem="l5g-Ja-1y4" firstAttribute="top" secondItem="13N-eF-c6C" secondAttribute="bottom" constant="20" id="hfq-bv-ktu"/>
+                                    <constraint firstItem="13N-eF-c6C" firstAttribute="width" secondItem="fDX-tD-S3m" secondAttribute="width" constant="-40" id="mZK-Nc-zJH"/>
+                                    <constraint firstItem="13N-eF-c6C" firstAttribute="centerX" secondItem="l5g-Ja-1y4" secondAttribute="centerX" id="qtZ-mZ-W5n"/>
+                                    <constraint firstItem="3hg-JD-rcF" firstAttribute="top" secondItem="l5g-Ja-1y4" secondAttribute="bottom" constant="20" id="xfg-j4-e1l"/>
+                                </constraints>
+                            </customView>
                         </subviews>
-                        <constraints>
-                            <constraint firstAttribute="centerX" secondItem="e4k-rb-8q3" secondAttribute="centerX" id="R2I-2t-aMg"/>
-                            <constraint firstAttribute="centerY" secondItem="e4k-rb-8q3" secondAttribute="centerY" id="wPA-CP-BLj"/>
-                        </constraints>
-                    </view>
+                        <holdingPriorities>
+                            <real value="250"/>
+                            <real value="400"/>
+                        </holdingPriorities>
+                    </splitView>
+                    <connections>
+                        <outlet property="appFileText" destination="13N-eF-c6C" id="Q4k-BP-SfB"/>
+                        <outlet property="crashFileText" destination="3hg-JD-rcF" id="cFW-8p-cOt"/>
+                        <outlet property="draggableView" destination="vqt-im-cA5" id="M3y-NJ-nNe"/>
+                        <outlet property="dysmFileText" destination="l5g-Ja-1y4" id="B0n-h5-Nqc"/>
+                        <outlet property="splitView" destination="8el-DQ-BQY" id="Gqh-D3-R2W"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
