@@ -12,6 +12,7 @@
 		8ED7F21B1B734ACF007A9D75 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7F21A1B734ACF007A9D75 /* Images.xcassets */; };
 		8ED7F21E1B734ACF007A9D75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7F21C1B734ACF007A9D75 /* Main.storyboard */; };
 		8ED7F22A1B734ACF007A9D75 /* SymbolicateCrashGUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED7F2291B734ACF007A9D75 /* SymbolicateCrashGUITests.swift */; };
+		8ED7F2341B7351B2007A9D75 /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED7F2331B7351B2007A9D75 /* DraggableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +35,7 @@
 		8ED7F2231B734ACF007A9D75 /* SymbolicateCrashGUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SymbolicateCrashGUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ED7F2281B734ACF007A9D75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8ED7F2291B734ACF007A9D75 /* SymbolicateCrashGUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolicateCrashGUITests.swift; sourceTree = "<group>"; };
+		8ED7F2331B7351B2007A9D75 /* DraggableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 			children = (
 				8ED7F2161B734ACF007A9D75 /* AppDelegate.swift */,
 				8ED7F2181B734ACF007A9D75 /* ViewController.swift */,
+				8ED7F2331B7351B2007A9D75 /* DraggableView.swift */,
 				8ED7F21A1B734ACF007A9D75 /* Images.xcassets */,
 				8ED7F21C1B734ACF007A9D75 /* Main.storyboard */,
 				8ED7F2141B734ACF007A9D75 /* Supporting Files */,
@@ -208,6 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8ED7F2341B7351B2007A9D75 /* DraggableView.swift in Sources */,
 				8ED7F2191B734ACF007A9D75 /* ViewController.swift in Sources */,
 				8ED7F2171B734ACF007A9D75 /* AppDelegate.swift in Sources */,
 			);
