@@ -14,6 +14,7 @@
 		8ED7F21E1B734ACF007A9D75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7F21C1B734ACF007A9D75 /* Main.storyboard */; };
 		8ED7F22A1B734ACF007A9D75 /* SymbolicateCrashGUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED7F2291B734ACF007A9D75 /* SymbolicateCrashGUITests.swift */; };
 		8ED7F2341B7351B2007A9D75 /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED7F2331B7351B2007A9D75 /* DraggableView.swift */; };
+		8ED7F2361B744A19007A9D75 /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED7F2351B744A19007A9D75 /* WindowController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 		8ED7F2281B734ACF007A9D75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8ED7F2291B734ACF007A9D75 /* SymbolicateCrashGUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolicateCrashGUITests.swift; sourceTree = "<group>"; };
 		8ED7F2331B7351B2007A9D75 /* DraggableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
+		8ED7F2351B744A19007A9D75 /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 		8FC232A85EF1BA00673779A4 /* Pods-SymbolicateCrashGUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SymbolicateCrashGUI.release.xcconfig"; path = "Pods/Target Support Files/Pods-SymbolicateCrashGUI/Pods-SymbolicateCrashGUI.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				8ED7F2161B734ACF007A9D75 /* AppDelegate.swift */,
+				8ED7F2351B744A19007A9D75 /* WindowController.swift */,
 				8ED7F2181B734ACF007A9D75 /* ViewController.swift */,
 				8ED7F2331B7351B2007A9D75 /* DraggableView.swift */,
 				8ED7F21A1B734ACF007A9D75 /* Images.xcassets */,
@@ -287,6 +290,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8ED7F2341B7351B2007A9D75 /* DraggableView.swift in Sources */,
+				8ED7F2361B744A19007A9D75 /* WindowController.swift in Sources */,
 				8ED7F2191B734ACF007A9D75 /* ViewController.swift in Sources */,
 				8ED7F2171B734ACF007A9D75 /* AppDelegate.swift in Sources */,
 			);

@@ -14,10 +14,6 @@ class DraggableView: NSView {
 
     override func awakeFromNib() {
         wantsLayer = true
-        if let layer = layer {
-            layer.backgroundColor = NSColor.whiteColor().CGColor
-        }
-
         registerForDraggedTypes([NSFilenamesPboardType])
     }
 
@@ -31,11 +27,11 @@ class DraggableView: NSView {
     }
 
     override func draggingExited(sender: NSDraggingInfo?) {
-        layer!.backgroundColor = NSColor.whiteColor().CGColor
+        layer!.backgroundColor = nil
     }
 
     override func performDragOperation(sender: NSDraggingInfo) -> Bool {
-        layer!.backgroundColor = NSColor.whiteColor().CGColor
+        layer!.backgroundColor = nil
 
         var pboard: NSPasteboard = sender.draggingPasteboard()
         if let filenames = pboard.propertyListForType(NSFilenamesPboardType) as? [String],

@@ -22,7 +22,6 @@ class ViewController: NSViewController, NSSplitViewDelegate {
     var crashFilename: String?
 
     override func awakeFromNib() {
-        splitView.delegate = self
         draggableView.callback = handleFilenames
     }
 
@@ -138,6 +137,18 @@ class ViewController: NSViewController, NSSplitViewDelegate {
 
     func splitView(splitView: NSSplitView, shouldHideDividerAtIndex dividerIndex: Int) -> Bool {
         return true
+    }
+
+    func splitView(splitView: NSSplitView, canCollapseSubview subview: NSView) -> Bool {
+        return false
+    }
+
+    func splitView(splitView: NSSplitView, shouldCollapseSubview subview: NSView, forDoubleClickOnDividerAtIndex dividerIndex: Int) -> Bool {
+        return false
+    }
+
+    func splitView(splitView: NSSplitView, shouldAdjustSizeOfSubview view: NSView) -> Bool {
+        return false
     }
 
     func runShellCommand(command: String) -> NSString? {
