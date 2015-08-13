@@ -85,41 +85,48 @@ class ViewController: NSViewController, NSSplitViewDelegate {
         NSFileManager.defaultManager().copyItemAtPath(dysmFilename, toPath: "\(workingDirectory)tmp.dYSM", error: nil)
         NSFileManager.defaultManager().copyItemAtPath(crashFilename, toPath: "\(workingDirectory)tmp.crash", error: nil)
 
+        // read cached symbolicatecrash path
+        var symbolicateCrashPath = NSUserDefaults.standardUserDefaults().stringForKey("NSUserDefaultsKey.symbolicatecrashPath")
+
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
 
-            // get user's xcode path
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                DJProgressHUD.showStatus("Locating Xcode...", fromView: self.draggableView)
-            })
-            var xcodePath: String = "/Applications/Xcode.app/"
-            let xcodeSelectCommand = "xcode-select -p"
-            if let output = self.runShellCommand(xcodeSelectCommand) {
-                let components = output.componentsSeparatedByString("Xcode.app")
-                if components.count > 0 {
-                    xcodePath = "\(components[0] as! String)Xcode.app/"
+            if symbolicateCrashPath == nil {
+                // get user's xcode path
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    DJProgressHUD.showStatus("Locating Xcode...", fromView: self.draggableView)
+                })
+                var xcodePath: String = "/Applications/Xcode.app/"
+                let xcodeSelectCommand = "xcode-select -p"
+                if let output = self.runShellCommand(xcodeSelectCommand) {
+                    let components = output.componentsSeparatedByString("Xcode.app")
+                    if components.count > 0 {
+                        xcodePath = "\(components[0] as! String)Xcode.app/"
+                    }
+                } else {
+                    // TODO: handle error
+                    return
                 }
-            } else {
-                // TODO: handle error
-                return
-            }
 
-            // get user's symbolicatecrash path
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                DJProgressHUD.showStatus("Locating SymbolicateCrash...", fromView: self.draggableView)
-            })
-            var symolicateCrashPath: String = "\(xcodePath)Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash"
-            let symolicateCrashCommand = "find '\(xcodePath)' -name symbolicatecrash -type f"
-            if let output = self.runShellCommand(symolicateCrashCommand) {
-                symolicateCrashPath = (output as String).stringByReplacingOccurrencesOfString("\n", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            } else {
-                // TODO: handle error
-                return
+                // get user's symbolicatecrash path
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    DJProgressHUD.showStatus("Locating SymbolicateCrash...", fromView: self.draggableView)
+                })
+                symbolicateCrashPath = "\(xcodePath)Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash"
+                let symolicateCrashCommand = "find '\(xcodePath)' -name symbolicatecrash -type f"
+                if let output = self.runShellCommand(symolicateCrashCommand) {
+                    symbolicateCrashPath = (output as String).stringByReplacingOccurrencesOfString("\n", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+                    NSUserDefaults.standardUserDefaults().setValue(symbolicateCrashPath, forKey: "NSUserDefaultsKey.symbolicatecrashPath")
+                    NSUserDefaults.standardUserDefaults().synchronize()
+                } else {
+                    // TODO: handle error
+                    return
+                }
             }
 
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 DJProgressHUD.showStatus("Runing SymbolicateCrash...", fromView: self.draggableView)
             })
-            let command = "export DEVELOPER_DIR=`xcode-select -p`;'\(symolicateCrashPath)' -v '\(workingDirectory)tmp.crash' > '\(workingDirectory)tmp.symbolicated.crash'"
+            let command = "export DEVELOPER_DIR=`xcode-select -p`;'\(symbolicateCrashPath!)' -v '\(workingDirectory)tmp.crash' > '\(workingDirectory)tmp.symbolicated.crash'"
             let logOutput = self.runShellCommand(command)
 
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
