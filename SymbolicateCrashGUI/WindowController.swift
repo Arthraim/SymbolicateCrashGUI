@@ -14,22 +14,11 @@ class WindowController: NSWindowController {
         super.windowDidLoad()
     }
 
-    override func awakeFromNib() {
-        let visualEffectView = NSVisualEffectView(frame: NSMakeRect(0, 0, 300, 180))
-        visualEffectView.material = NSVisualEffectMaterial.Dark
-        visualEffectView.blendingMode = NSVisualEffectBlendingMode.BehindWindow
-        visualEffectView.state = NSVisualEffectState.Active
-
-        if let window = window {
-            window.styleMask = window.styleMask | NSFullSizeContentViewWindowMask
-            window.titlebarAppearsTransparent = true
-            //self.appearance = NSAppearance(named: NSAppearanceNameVibrantDark)
-
-//            window.contentView.addSubview(visualEffectView)
-
-//            window.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[visualEffectView]-0-|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: ["visualEffectView":visualEffectView]))
-//            window.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[visualEffectView]-0-|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: ["visualEffectView":visualEffectView]))
-        }
+    @IBAction func changeLogAction(sender: AnyObject) {
+        (contentViewController as! ViewController).changeLogFile()
     }
 
+    @IBAction func changeAllAction(sender: AnyObject) {
+        (contentViewController as! ViewController).changeAllFiles()
+    }
 }

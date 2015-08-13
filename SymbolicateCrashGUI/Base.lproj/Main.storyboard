@@ -107,11 +107,29 @@
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="WindowController" customModule="SymbolicateCrashGUI" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="SymbolicateGrashGUI" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" fullSizeContentView="YES"/>
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <value key="minSize" type="size" width="480" height="270"/>
+                        <toolbar key="toolbar" implicitIdentifier="FCAF9F96-472C-46ED-8D7A-10CCD1C51D47" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="rZK-iN-Ij0">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="9C0C6206-36BE-4BCF-B73A-1CD8D6BE4E8D" label="Change Log" paletteLabel="Change Log" tag="-1" image="log" id="e0S-6u-NlS">
+                                    <connections>
+                                        <action selector="changeLogAction:" target="B8D-0N-5wS" id="8sv-u1-HRI"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="2BDB53F5-3B48-48D5-B487-2752B96D70E8" label="Change All" paletteLabel="Change All" tag="-1" image="all" id="74P-Ju-u4F">
+                                    <connections>
+                                        <action selector="changeAllAction:" target="B8D-0N-5wS" id="GPA-Ct-VLu"/>
+                                    </connections>
+                                </toolbarItem>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="e0S-6u-NlS"/>
+                                <toolbarItem reference="74P-Ju-u4F"/>
+                            </defaultToolbarItems>
+                        </toolbar>
                     </window>
                     <connections>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
@@ -133,11 +151,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="193"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
-                                    <view misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vqt-im-cA5" customClass="DraggableView" customModule="SymbolicateCrashGUI" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="6" width="450" height="187"/>
+                                    <view translatesAutoresizingMaskIntoConstraints="NO" id="vqt-im-cA5" customClass="DraggableView" customModule="SymbolicateCrashGUI" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="450" height="193"/>
                                         <subviews>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1fQ-ZG-x2u">
-                                                <rect key="frame" x="134" y="85" width="183" height="17"/>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1fQ-ZG-x2u">
+                                                <rect key="frame" x="134" y="88" width="183" height="17"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Drag .app .dYSM .crash here" id="Tg3-bD-Pld">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -162,25 +180,25 @@
                                 <rect key="frame" x="0.0" y="194" width="450" height="142"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
-                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="13N-eF-c6C">
-                                        <rect key="frame" x="18" y="101" width="414" height="17"/>
-                                        <textFieldCell key="cell" controlSize="mini" enabled="NO" sendsActionOnEndEditing="YES" alignment="center" title="No .app provided" id="WXZ-eR-SfC">
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="13N-eF-c6C">
+                                        <rect key="frame" x="18" y="100" width="414" height="17"/>
+                                        <textFieldCell key="cell" controlSize="mini" enabled="NO" sendsActionOnEndEditing="YES" alignment="center" placeholderString="No .app provided" id="WXZ-eR-SfC">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l5g-Ja-1y4">
-                                        <rect key="frame" x="18" y="64" width="414" height="17"/>
-                                        <textFieldCell key="cell" controlSize="mini" enabled="NO" sendsActionOnEndEditing="YES" alignment="center" title="No .dYSM provided" id="qcQ-PF-dZk">
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l5g-Ja-1y4">
+                                        <rect key="frame" x="18" y="63" width="414" height="17"/>
+                                        <textFieldCell key="cell" controlSize="mini" enabled="NO" sendsActionOnEndEditing="YES" alignment="center" placeholderString="No .dYSM provided" id="qcQ-PF-dZk">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3hg-JD-rcF">
-                                        <rect key="frame" x="18" y="27" width="414" height="17"/>
-                                        <textFieldCell key="cell" controlSize="mini" enabled="NO" sendsActionOnEndEditing="YES" alignment="center" title="No .crash provided" id="UBd-fi-Sql">
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3hg-JD-rcF">
+                                        <rect key="frame" x="18" y="26" width="414" height="17"/>
+                                        <textFieldCell key="cell" controlSize="mini" enabled="NO" sendsActionOnEndEditing="YES" alignment="center" placeholderString="No .crash provided" id="UBd-fi-Sql">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -221,4 +239,8 @@
             <point key="canvasLocation" x="75" y="637"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="all" width="32" height="32"/>
+        <image name="log" width="32" height="32"/>
+    </resources>
 </document>

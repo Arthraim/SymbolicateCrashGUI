@@ -35,13 +35,15 @@ class ViewController: NSViewController, NSSplitViewDelegate {
         }
     }
 
-    func updateUI() {
+    func doSymbolicateIfNeeded() {
         // when everything is ready, do symbolicate
         if let appFilename = appFilename,
             dysmFilename = dysmFilename,
             crashFilename = crashFilename {
-                DJProgressHUD.showStatus("Initializing...", fromView: self.draggableView)
-                doSymbolicate(appFilename: appFilename, dysmFilename: dysmFilename, crashFilename: crashFilename)
+                if appFilename != "" && dysmFilename != "" && crashFilename != "" {
+                    DJProgressHUD.showStatus("Initializing...", fromView: self.draggableView)
+                    doSymbolicate(appFilename: appFilename, dysmFilename: dysmFilename, crashFilename: crashFilename)
+                }
         }
     }
 
@@ -63,8 +65,22 @@ class ViewController: NSViewController, NSSplitViewDelegate {
                 crashFileText.stringValue = filename
             }
         }
-        updateUI()
+        doSymbolicateIfNeeded()
         return successOnce
+    }
+
+    func changeLogFile () {
+        crashFilename = ""
+        crashFileText.stringValue = ""
+    }
+
+    func changeAllFiles () {
+        appFilename = ""
+        appFileText.stringValue = ""
+        dysmFilename = ""
+        dysmFileText.stringValue = ""
+        crashFilename = ""
+        crashFileText.stringValue = ""
     }
 
     func doSymbolicate(#appFilename: String, dysmFilename: String, crashFilename: String) {
@@ -133,7 +149,6 @@ class ViewController: NSViewController, NSSplitViewDelegate {
                 if let logOutput = logOutput {
                     NSWorkspace.sharedWorkspace().openFile("\(workingDirectory)tmp.symbolicated.crash")
                     DJProgressHUD.showStatus("Done!", fromView: self.draggableView)
-                    NSLog("%@", logOutput)
                 } else {
                     DJProgressHUD.showStatus("SymbolicateCrash fail", fromView: self.draggableView)
                 }
