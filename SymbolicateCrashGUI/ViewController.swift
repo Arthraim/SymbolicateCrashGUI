@@ -83,23 +83,30 @@ class ViewController: NSViewController, NSSplitViewDelegate {
         crashFileText.stringValue = ""
     }
 
-    func doSymbolicate(#appFilename: String, dysmFilename: String, crashFilename: String) {
+    func doSymbolicate(appFilename appFilename: String, dysmFilename: String, crashFilename: String) {
         // export DEVELOPER_DIR=`xcode-select -p`;alias symbolicate='/Applications/Xcode.app//Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash';symbolicate -v '1438759250.308397.crash' > '1438759250.308397.symbolicated.crash'
 
         // create a temporary directory for .app .dsym .crash files
         DJProgressHUD.showStatus("Creating directory...", fromView: self.draggableView)
         var paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DesktopDirectory, NSSearchPathDomainMask.UserDomainMask, true);
-        var workingDirectory = "\(paths[0])/symbolicateWorkspace\(arc4random_uniform(1000))/"
-        if !NSFileManager.defaultManager().createDirectoryAtPath(workingDirectory, withIntermediateDirectories:true, attributes:nil, error:nil) {
+        let workingDirectory = "\(paths[0])/symbolicateWorkspace\(arc4random_uniform(1000))/"
+        do {
+            try NSFileManager.defaultManager().createDirectoryAtPath(workingDirectory, withIntermediateDirectories:true, attributes:nil)
+        } catch _ {
             // TODO: handle error
             return
         }
 
         // copy files to this directory
         DJProgressHUD.showStatus("Copying files...", fromView: self.draggableView)
-        NSFileManager.defaultManager().copyItemAtPath(appFilename, toPath: "\(workingDirectory)tmp.app", error: nil)
-        NSFileManager.defaultManager().copyItemAtPath(dysmFilename, toPath: "\(workingDirectory)tmp.dYSM", error: nil)
-        NSFileManager.defaultManager().copyItemAtPath(crashFilename, toPath: "\(workingDirectory)tmp.crash", error: nil)
+        do {
+            try NSFileManager.defaultManager().copyItemAtPath(appFilename, toPath: "\(workingDirectory)tmp.app")
+            try NSFileManager.defaultManager().copyItemAtPath(dysmFilename, toPath: "\(workingDirectory)tmp.dYSM")
+            try NSFileManager.defaultManager().copyItemAtPath(crashFilename, toPath: "\(workingDirectory)tmp.crash")
+        } catch _ {
+            // TODO: handle error
+            return
+        }
 
         // read cached symbolicatecrash path
         var symbolicateCrashPath = NSUserDefaults.standardUserDefaults().stringForKey("NSUserDefaultsKey.symbolicatecrashPath")
@@ -116,7 +123,7 @@ class ViewController: NSViewController, NSSplitViewDelegate {
                 if let output = self.runShellCommand(xcodeSelectCommand) {
                     let components = output.componentsSeparatedByString("Xcode.app")
                     if components.count > 0 {
-                        xcodePath = "\(components[0] as! String)Xcode.app/"
+                        xcodePath = "\(components[0])Xcode.app/"
                     }
                 } else {
                     // TODO: handle error
