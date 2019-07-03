@@ -10,32 +10,32 @@ import Cocoa
 
 class DraggableView: NSView {
 
-    var callback: ((filenames: [String]) -> (Bool))?
+    var callback: ((_ filenames: [String]) -> (Bool))?
 
     override func awakeFromNib() {
         wantsLayer = true
-        registerForDraggedTypes([NSFilenamesPboardType])
+        register(forDraggedTypes: [NSFilenamesPboardType])
     }
 
-    override func draggingEntered(sender: NSDraggingInfo) -> NSDragOperation {
-        layer!.backgroundColor = NSColor(calibratedRed: 0.835, green: 0.875, blue: 0.753, alpha: 1).CGColor
-        return .Copy
+    override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
+        layer!.backgroundColor = NSColor(calibratedRed: 0.835, green: 0.875, blue: 0.753, alpha: 1).cgColor
+        return .copy
     }
 
-    override func draggingUpdated(sender: NSDraggingInfo) -> NSDragOperation {
-        return .Copy
+    override func draggingUpdated(_ sender: NSDraggingInfo) -> NSDragOperation {
+        return .copy
     }
 
-    override func draggingExited(sender: NSDraggingInfo?) {
+    override func draggingExited(_ sender: NSDraggingInfo?) {
         layer!.backgroundColor = nil
     }
 
-    override func performDragOperation(sender: NSDraggingInfo) -> Bool {
+    override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         layer!.backgroundColor = nil
 
         let pboard: NSPasteboard = sender.draggingPasteboard()
-        if let filenames = pboard.propertyListForType(NSFilenamesPboardType) as? [String],
-            callback = callback {
+        if let filenames = pboard.propertyList(forType: NSFilenamesPboardType) as? [String],
+            let callback = callback {
                 return callback(filenames: filenames)
         }
         return false

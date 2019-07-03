@@ -14,11 +14,11 @@ class WindowController: NSWindowController {
         super.windowDidLoad()
     }
 
-    @IBAction func changeLogAction(sender: AnyObject) {
+    @IBAction func changeLogAction(_ sender: AnyObject) {
         (contentViewController as! ViewController).changeLogFile()
     }
 
-    @IBAction func changeAllAction(sender: AnyObject) {
+    @IBAction func changeAllAction(_ sender: AnyObject) {
         (contentViewController as! ViewController).changeAllFiles()
     }
 }
