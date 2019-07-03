@@ -12,11 +12,9 @@ class ViewController: NSViewController, NSSplitViewDelegate {
 
     @IBOutlet weak var splitView: NSSplitView!
     @IBOutlet weak var draggableView: DraggableView!
-    @IBOutlet weak var appFileText: NSTextField!
     @IBOutlet weak var dysmFileText: NSTextField!
     @IBOutlet weak var crashFileText: NSTextField!
 
-    var appFilename: String?
     var dysmFilename: String?
     var crashFilename: String?
 
@@ -30,12 +28,11 @@ class ViewController: NSViewController, NSSplitViewDelegate {
 
     func doSymbolicateIfNeeded() {
         // when everything is ready, do symbolicate
-        if let appFilename = appFilename,
-            let dysmFilename = dysmFilename,
+        if let dysmFilename = dysmFilename,
             let crashFilename = crashFilename {
-                if appFilename != "" && dysmFilename != "" && crashFilename != "" {
+                if dysmFilename != "" && crashFilename != "" {
                     DJProgressHUD.showStatus("Initializing...", from: self.draggableView)
-                    doSymbolicate(appFilename: appFilename, dysmFilename: dysmFilename, crashFilename: crashFilename)
+                    doSymbolicate(dysmFilename: dysmFilename, crashFilename: crashFilename)
                 }
         }
     }
@@ -44,11 +41,7 @@ class ViewController: NSViewController, NSSplitViewDelegate {
         var successOnce: Bool = false
         for filename in filenames {
             NSLog("daggred %@", filename)
-            if filename.hasSuffix(".app") {
-                successOnce = true
-                appFilename = filename
-                appFileText.stringValue = filename
-            } else if filename.hasSuffix(".dSYM") {
+            if filename.hasSuffix(".dSYM") {
                 successOnce = true
                 dysmFilename = filename
                 dysmFileText.stringValue = filename
@@ -68,15 +61,13 @@ class ViewController: NSViewController, NSSplitViewDelegate {
     }
 
     func changeAllFiles () {
-        appFilename = ""
-        appFileText.stringValue = ""
         dysmFilename = ""
         dysmFileText.stringValue = ""
         crashFilename = ""
         crashFileText.stringValue = ""
     }
 
-    func doSymbolicate(appFilename: String, dysmFilename: String, crashFilename: String) {
+    func doSymbolicate(dysmFilename: String, crashFilename: String) {
         // export DEVELOPER_DIR=`xcode-select -p`;alias symbolicate='/Applications/Xcode.app//Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash';symbolicate -v '1438759250.308397.crash' > '1438759250.308397.symbolicated.crash'
 
         // create a temporary directory for .app .dsym .crash files
@@ -93,7 +84,6 @@ class ViewController: NSViewController, NSSplitViewDelegate {
         // copy files to this directory
         DJProgressHUD.showStatus("Copying files...", from: self.draggableView)
         do {
-            try FileManager.default.copyItem(atPath: appFilename, toPath: "\(workingDirectory)tmp.app")
             try FileManager.default.copyItem(atPath: dysmFilename, toPath: "\(workingDirectory)tmp.dYSM")
             try FileManager.default.copyItem(atPath: crashFilename, toPath: "\(workingDirectory)tmp.crash")
         } catch _ {
@@ -127,8 +117,8 @@ class ViewController: NSViewController, NSSplitViewDelegate {
                 DispatchQueue.main.async(execute: { () -> Void in
                     DJProgressHUD.showStatus("Locating SymbolicateCrash...", from: self.draggableView)
                 })
-                symbolicateCrashPath = "\(xcodePath)Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash"
-                let symolicateCrashCommand = "find '\(xcodePath)' -name symbolicatecrash -type f"
+                symbolicateCrashPath = "\(xcodePath)Contents/SharedFrameworks/DVTFoundation.framework/Versions/A/Resources/symbolicatecrash"
+                let symolicateCrashCommand = "find '\(xcodePath)' -name symbolicatecrash -type f | grep SharedFrameworks"
                 if let output = self.runShellCommand(symolicateCrashCommand) {
                     symbolicateCrashPath = (output as String).replacingOccurrences(of: "\n", with: "", options: NSString.CompareOptions.literal, range: nil)
                     UserDefaults.standard.setValue(symbolicateCrashPath, forKey: "NSUserDefaultsKey.symbolicatecrashPath")

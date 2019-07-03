@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -106,7 +108,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="WindowController" customModule="SymbolicateCrashGUI" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="SymbolicateGrashGUI" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="SymbolicateGrashGUI" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
@@ -130,6 +132,9 @@
                                 <toolbarItem reference="74P-Ju-u4F"/>
                             </defaultToolbarItems>
                         </toolbar>
+                        <connections>
+                            <outlet property="delegate" destination="B8D-0N-5wS" id="ptN-sT-wm6"/>
+                        </connections>
                     </window>
                     <connections>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
@@ -148,14 +153,14 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <customView id="GLT-SX-h4O">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="193"/>
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="230"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <view translatesAutoresizingMaskIntoConstraints="NO" id="vqt-im-cA5" customClass="DraggableView" customModule="SymbolicateCrashGUI" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="450" height="193"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="450" height="230"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1fQ-ZG-x2u">
-                                                <rect key="frame" x="134" y="88" width="183" height="17"/>
+                                                <rect key="frame" x="136" y="107" width="178" height="17"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Drag .app .dYSM .crash here" id="Tg3-bD-Pld">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -177,19 +182,11 @@
                                 </constraints>
                             </customView>
                             <customView id="fDX-tD-S3m">
-                                <rect key="frame" x="0.0" y="194" width="450" height="142"/>
+                                <rect key="frame" x="0.0" y="231" width="450" height="105"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
-                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="13N-eF-c6C">
-                                        <rect key="frame" x="18" y="100" width="414" height="17"/>
-                                        <textFieldCell key="cell" controlSize="mini" enabled="NO" sendsActionOnEndEditing="YES" alignment="center" placeholderString="No .app provided" id="WXZ-eR-SfC">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l5g-Ja-1y4">
-                                        <rect key="frame" x="18" y="63" width="414" height="17"/>
+                                        <rect key="frame" x="18" y="68" width="414" height="17"/>
                                         <textFieldCell key="cell" controlSize="mini" enabled="NO" sendsActionOnEndEditing="YES" alignment="center" placeholderString="No .dYSM provided" id="qcQ-PF-dZk">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -197,7 +194,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3hg-JD-rcF">
-                                        <rect key="frame" x="18" y="26" width="414" height="17"/>
+                                        <rect key="frame" x="18" y="31" width="414" height="17"/>
                                         <textFieldCell key="cell" controlSize="mini" enabled="NO" sendsActionOnEndEditing="YES" alignment="center" placeholderString="No .crash provided" id="UBd-fi-Sql">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -206,14 +203,11 @@
                                     </textField>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="centerY" secondItem="l5g-Ja-1y4" secondAttribute="centerY" id="3Oe-rs-o9T"/>
                                     <constraint firstItem="3hg-JD-rcF" firstAttribute="width" secondItem="fDX-tD-S3m" secondAttribute="width" constant="-40" id="5eN-Kb-dSr"/>
                                     <constraint firstItem="3hg-JD-rcF" firstAttribute="centerX" secondItem="l5g-Ja-1y4" secondAttribute="centerX" id="CAJ-5B-JxG"/>
+                                    <constraint firstItem="l5g-Ja-1y4" firstAttribute="top" secondItem="fDX-tD-S3m" secondAttribute="top" constant="20" id="GIR-Ym-Ao8"/>
                                     <constraint firstItem="l5g-Ja-1y4" firstAttribute="width" secondItem="fDX-tD-S3m" secondAttribute="width" constant="-40" id="HTO-dm-sSL"/>
                                     <constraint firstAttribute="centerX" secondItem="l5g-Ja-1y4" secondAttribute="centerX" id="XB9-vY-tSQ"/>
-                                    <constraint firstItem="l5g-Ja-1y4" firstAttribute="top" secondItem="13N-eF-c6C" secondAttribute="bottom" constant="20" id="hfq-bv-ktu"/>
-                                    <constraint firstItem="13N-eF-c6C" firstAttribute="width" secondItem="fDX-tD-S3m" secondAttribute="width" constant="-40" id="mZK-Nc-zJH"/>
-                                    <constraint firstItem="13N-eF-c6C" firstAttribute="centerX" secondItem="l5g-Ja-1y4" secondAttribute="centerX" id="qtZ-mZ-W5n"/>
                                     <constraint firstItem="3hg-JD-rcF" firstAttribute="top" secondItem="l5g-Ja-1y4" secondAttribute="bottom" constant="20" id="xfg-j4-e1l"/>
                                 </constraints>
                             </customView>
@@ -227,7 +221,6 @@
                         </connections>
                     </splitView>
                     <connections>
-                        <outlet property="appFileText" destination="13N-eF-c6C" id="Q4k-BP-SfB"/>
                         <outlet property="crashFileText" destination="3hg-JD-rcF" id="cFW-8p-cOt"/>
                         <outlet property="draggableView" destination="vqt-im-cA5" id="M3y-NJ-nNe"/>
                         <outlet property="dysmFileText" destination="l5g-Ja-1y4" id="B0n-h5-Nqc"/>
