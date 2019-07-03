@@ -11,10 +11,11 @@ import Cocoa
 class DraggableView: NSView {
 
     var callback: ((_ filenames: [String]) -> (Bool))?
+    let NSFilenamesPboardTypeTemp = NSPasteboard.PasteboardType("NSFilenamesPboardType")
 
     override func awakeFromNib() {
         wantsLayer = true
-        register(forDraggedTypes: [NSFilenamesPboardType])
+        registerForDraggedTypes([NSFilenamesPboardTypeTemp])
     }
 
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
@@ -33,10 +34,10 @@ class DraggableView: NSView {
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         layer!.backgroundColor = nil
 
-        let pboard: NSPasteboard = sender.draggingPasteboard()
-        if let filenames = pboard.propertyList(forType: NSFilenamesPboardType) as? [String],
+        let pboard: NSPasteboard = sender.draggingPasteboard
+        if let filenames = pboard.propertyList(forType: NSFilenamesPboardTypeTemp) as? [String],
             let callback = callback {
-                return callback(filenames: filenames)
+                return callback(filenames)
         }
         return false
     }
