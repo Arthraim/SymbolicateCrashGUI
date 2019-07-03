@@ -47,7 +47,7 @@ class ViewController: NSViewController, NSSplitViewDelegate {
         }
     }
 
-    func handleFilenames(filenames: [String]) -> (Bool) {
+    func handleFilenames(_ filenames: [String]) -> (Bool) {
         var successOnce: Bool = false
         for filename in filenames {
             NSLog("daggred %@", filename)
@@ -83,15 +83,15 @@ class ViewController: NSViewController, NSSplitViewDelegate {
         crashFileText.stringValue = ""
     }
 
-    func doSymbolicate(appFilename appFilename: String, dysmFilename: String, crashFilename: String) {
+    func doSymbolicate(appFilename: String, dysmFilename: String, crashFilename: String) {
         // export DEVELOPER_DIR=`xcode-select -p`;alias symbolicate='/Applications/Xcode.app//Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash';symbolicate -v '1438759250.308397.crash' > '1438759250.308397.symbolicated.crash'
 
         // create a temporary directory for .app .dsym .crash files
         DJProgressHUD.showStatus("Creating directory...", fromView: self.draggableView)
-        var paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DesktopDirectory, NSSearchPathDomainMask.UserDomainMask, true);
+        var paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.desktopDirectory, FileManager.SearchPathDomainMask.userDomainMask, true);
         let workingDirectory = "\(paths[0])/symbolicateWorkspace\(arc4random_uniform(1000))/"
         do {
-            try NSFileManager.defaultManager().createDirectoryAtPath(workingDirectory, withIntermediateDirectories:true, attributes:nil)
+            try FileManager.default.createDirectory(atPath: workingDirectory, withIntermediateDirectories:true, attributes:nil)
         } catch _ {
             // TODO: handle error
             return
@@ -100,28 +100,28 @@ class ViewController: NSViewController, NSSplitViewDelegate {
         // copy files to this directory
         DJProgressHUD.showStatus("Copying files...", fromView: self.draggableView)
         do {
-            try NSFileManager.defaultManager().copyItemAtPath(appFilename, toPath: "\(workingDirectory)tmp.app")
-            try NSFileManager.defaultManager().copyItemAtPath(dysmFilename, toPath: "\(workingDirectory)tmp.dYSM")
-            try NSFileManager.defaultManager().copyItemAtPath(crashFilename, toPath: "\(workingDirectory)tmp.crash")
+            try FileManager.default.copyItem(atPath: appFilename, toPath: "\(workingDirectory)tmp.app")
+            try FileManager.default.copyItem(atPath: dysmFilename, toPath: "\(workingDirectory)tmp.dYSM")
+            try FileManager.default.copyItem(atPath: crashFilename, toPath: "\(workingDirectory)tmp.crash")
         } catch _ {
             // TODO: handle error
             return
         }
 
         // read cached symbolicatecrash path
-        var symbolicateCrashPath = NSUserDefaults.standardUserDefaults().stringForKey("NSUserDefaultsKey.symbolicatecrashPath")
+        var symbolicateCrashPath = UserDefaults.standard.string(forKey: "NSUserDefaultsKey.symbolicatecrashPath")
 
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background).async(execute: { () -> Void in
 
             if symbolicateCrashPath == nil {
                 // get user's xcode path
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     DJProgressHUD.showStatus("Locating Xcode...", fromView: self.draggableView)
                 })
                 var xcodePath: String = "/Applications/Xcode.app/"
                 let xcodeSelectCommand = "xcode-select -p"
                 if let output = self.runShellCommand(xcodeSelectCommand) {
-                    let components = output.componentsSeparatedByString("Xcode.app")
+                    let components = output.components(separatedBy: "Xcode.app")
                     if components.count > 0 {
                         xcodePath = "\(components[0])Xcode.app/"
                     }
@@ -131,30 +131,30 @@ class ViewController: NSViewController, NSSplitViewDelegate {
                 }
 
                 // get user's symbolicatecrash path
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     DJProgressHUD.showStatus("Locating SymbolicateCrash...", fromView: self.draggableView)
                 })
                 symbolicateCrashPath = "\(xcodePath)Contents/SharedFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash"
                 let symolicateCrashCommand = "find '\(xcodePath)' -name symbolicatecrash -type f"
                 if let output = self.runShellCommand(symolicateCrashCommand) {
-                    symbolicateCrashPath = (output as String).stringByReplacingOccurrencesOfString("\n", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-                    NSUserDefaults.standardUserDefaults().setValue(symbolicateCrashPath, forKey: "NSUserDefaultsKey.symbolicatecrashPath")
-                    NSUserDefaults.standardUserDefaults().synchronize()
+                    symbolicateCrashPath = (output as String).replacingOccurrences(of: "\n", with: "", options: NSString.CompareOptions.literal, range: nil)
+                    UserDefaults.standard.setValue(symbolicateCrashPath, forKey: "NSUserDefaultsKey.symbolicatecrashPath")
+                    UserDefaults.standard.synchronize()
                 } else {
                     // TODO: handle error
                     return
                 }
             }
 
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
                 DJProgressHUD.showStatus("Runing SymbolicateCrash...", fromView: self.draggableView)
             })
             let command = "export DEVELOPER_DIR=`xcode-select -p`;'\(symbolicateCrashPath!)' -v '\(workingDirectory)tmp.crash' > '\(workingDirectory)tmp.symbolicated.crash'"
             let logOutput = self.runShellCommand(command)
 
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
                 if let logOutput = logOutput {
-                    NSWorkspace.sharedWorkspace().openFile("\(workingDirectory)tmp.symbolicated.crash")
+                    NSWorkspace.shared().openFile("\(workingDirectory)tmp.symbolicated.crash")
                     DJProgressHUD.showStatus("Done!", fromView: self.draggableView)
                 } else {
                     DJProgressHUD.showStatus("SymbolicateCrash fail", fromView: self.draggableView)
@@ -164,39 +164,39 @@ class ViewController: NSViewController, NSSplitViewDelegate {
         }) // end of async closure
     }
 
-    func splitView(splitView: NSSplitView, shouldHideDividerAtIndex dividerIndex: Int) -> Bool {
+    func splitView(_ splitView: NSSplitView, shouldHideDividerAt dividerIndex: Int) -> Bool {
         return true
     }
 
-    func splitView(splitView: NSSplitView, canCollapseSubview subview: NSView) -> Bool {
+    func splitView(_ splitView: NSSplitView, canCollapseSubview subview: NSView) -> Bool {
         return false
     }
 
-    func splitView(splitView: NSSplitView, shouldCollapseSubview subview: NSView, forDoubleClickOnDividerAtIndex dividerIndex: Int) -> Bool {
+    func splitView(_ splitView: NSSplitView, shouldCollapseSubview subview: NSView, forDoubleClickOnDividerAt dividerIndex: Int) -> Bool {
         return false
     }
 
-    func splitView(splitView: NSSplitView, shouldAdjustSizeOfSubview view: NSView) -> Bool {
+    func splitView(_ splitView: NSSplitView, shouldAdjustSizeOfSubview view: NSView) -> Bool {
         return false
     }
 
-    func runShellCommand(command: String) -> NSString? {
+    func runShellCommand(_ command: String) -> NSString? {
         var output: String?
 
-        let pipe = NSPipe()
+        let pipe = Pipe()
 
-        let task = NSTask()
+        let task = Process()
         task.launchPath = "/bin/sh"
         task.arguments = ["-c", command]
         task.standardOutput = pipe
 
-        let file: NSFileHandle = pipe.fileHandleForReading
+        let file: FileHandle = pipe.fileHandleForReading
 
         task.launch()
 
-        let data: NSData = file.readDataToEndOfFile()
+        let data: Data = file.readDataToEndOfFile()
 
-        return NSString(data:data, encoding:NSUTF8StringEncoding)
+        return NSString(data:data, encoding:String.Encoding.utf8)
     }
 
 }
