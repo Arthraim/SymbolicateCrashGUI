@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1849613180C270D4AF906ACF /* Pods_SymbolicateCrashGUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A570D9D69EEAA2725712F148 /* Pods_SymbolicateCrashGUI.framework */; };
+		8E667E5A22CCC739009881DC /* DJActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E667E5322CCC739009881DC /* DJActivityIndicator.m */; };
+		8E667E5B22CCC739009881DC /* DJProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E667E5522CCC739009881DC /* DJProgressIndicator.m */; };
+		8E667E5C22CCC739009881DC /* DJBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E667E5722CCC739009881DC /* DJBezierPath.m */; };
+		8E667E5D22CCC739009881DC /* DJProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E667E5822CCC739009881DC /* DJProgressHUD.m */; };
 		8ED7F2171B734ACF007A9D75 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED7F2161B734ACF007A9D75 /* AppDelegate.swift */; };
 		8ED7F2191B734ACF007A9D75 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED7F2181B734ACF007A9D75 /* ViewController.swift */; };
 		8ED7F21B1B734ACF007A9D75 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8ED7F21A1B734ACF007A9D75 /* Images.xcassets */; };
@@ -32,6 +36,15 @@
 		10C3CACA27FC409F7599ABB0 /* Pods-SymbolicateCrashGUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SymbolicateCrashGUITests.debug.xcconfig"; path = "Target Support Files/Pods-SymbolicateCrashGUITests/Pods-SymbolicateCrashGUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		1EC702EB9FA0A6C2E974612E /* Pods-SymbolicateCrashGUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SymbolicateCrashGUI.release.xcconfig"; path = "Target Support Files/Pods-SymbolicateCrashGUI/Pods-SymbolicateCrashGUI.release.xcconfig"; sourceTree = "<group>"; };
 		76127A8714E935E2ED21B9B7 /* Pods-SymbolicateCrashGUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SymbolicateCrashGUITests.release.xcconfig"; path = "Target Support Files/Pods-SymbolicateCrashGUITests/Pods-SymbolicateCrashGUITests.release.xcconfig"; sourceTree = "<group>"; };
+		8E667E5222CCC739009881DC /* DJBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJBezierPath.h; sourceTree = "<group>"; };
+		8E667E5322CCC739009881DC /* DJActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJActivityIndicator.m; sourceTree = "<group>"; };
+		8E667E5422CCC739009881DC /* DJProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJProgressHUD.h; sourceTree = "<group>"; };
+		8E667E5522CCC739009881DC /* DJProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJProgressIndicator.m; sourceTree = "<group>"; };
+		8E667E5622CCC739009881DC /* DJActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJActivityIndicator.h; sourceTree = "<group>"; };
+		8E667E5722CCC739009881DC /* DJBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJBezierPath.m; sourceTree = "<group>"; };
+		8E667E5822CCC739009881DC /* DJProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJProgressHUD.m; sourceTree = "<group>"; };
+		8E667E5922CCC739009881DC /* DJProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJProgressIndicator.h; sourceTree = "<group>"; };
+		8E667E6022CCC7B4009881DC /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		8ED7F2111B734ACF007A9D75 /* SymbolicateCrashGUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SymbolicateCrashGUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ED7F2151B734ACF007A9D75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8ED7F2161B734ACF007A9D75 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +101,30 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		8E667E5022CCC739009881DC /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				8E667E5122CCC739009881DC /* DJProgressHUD */,
+				8E667E6022CCC7B4009881DC /* BridgingHeader.h */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		8E667E5122CCC739009881DC /* DJProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				8E667E5222CCC739009881DC /* DJBezierPath.h */,
+				8E667E5322CCC739009881DC /* DJActivityIndicator.m */,
+				8E667E5422CCC739009881DC /* DJProgressHUD.h */,
+				8E667E5522CCC739009881DC /* DJProgressIndicator.m */,
+				8E667E5622CCC739009881DC /* DJActivityIndicator.h */,
+				8E667E5722CCC739009881DC /* DJBezierPath.m */,
+				8E667E5822CCC739009881DC /* DJProgressHUD.m */,
+				8E667E5922CCC739009881DC /* DJProgressIndicator.h */,
+			);
+			path = DJProgressHUD;
+			sourceTree = "<group>";
+		};
 		8ED7F2081B734ACF007A9D75 = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +154,7 @@
 				8ED7F2331B7351B2007A9D75 /* DraggableView.swift */,
 				8ED7F21A1B734ACF007A9D75 /* Images.xcassets */,
 				8ED7F21C1B734ACF007A9D75 /* Main.storyboard */,
+				8E667E5022CCC739009881DC /* Library */,
 				8ED7F2141B734ACF007A9D75 /* Supporting Files */,
 			);
 			path = SymbolicateCrashGUI;
@@ -298,9 +336,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E667E5B22CCC739009881DC /* DJProgressIndicator.m in Sources */,
+				8E667E5C22CCC739009881DC /* DJBezierPath.m in Sources */,
+				8E667E5A22CCC739009881DC /* DJActivityIndicator.m in Sources */,
 				8ED7F2341B7351B2007A9D75 /* DraggableView.swift in Sources */,
 				8ED7F2361B744A19007A9D75 /* WindowController.swift in Sources */,
 				8ED7F2191B734ACF007A9D75 /* ViewController.swift in Sources */,
+				8E667E5D22CCC739009881DC /* DJProgressHUD.m in Sources */,
 				8ED7F2171B734ACF007A9D75 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -386,6 +428,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = SymbolicateCrashGUI/Library/BridgingHeader.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -434,6 +477,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = SymbolicateCrashGUI/Library/BridgingHeader.h;
 			};
 			name = Release;
 		};
